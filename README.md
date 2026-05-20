@@ -114,93 +114,167 @@ function verifyOTP(){
 function saveAndSend(){
     let name=userName.value.trim();
     let mob=mobile.value.trim();
-    if(name==""||mob.length!==10){alert("Naam aur valid mobile dalo");return;}
+<!DOCTYPE html>
+<html>
+<head>
 
-    let data={
-        id:Date.now(),
-        name,mobile:mob,
-        date:workDate.value,
-        time:workTime.value,
-        detail:detail.value,
-        amount:amount.value
-    };
+<meta charset="UTF-8">
+<title>Kaam Hisab</title>
 
-    let all=JSON.parse(localStorage.getItem("hisab")||"[]");
-    all.push(data);
-    localStorage.setItem("hisab",JSON.stringify(all));
+<style>
 
-    let historyLink=
-        window.location.origin+
-        window.location.pathname+
-        "#history="+mob;
-
-    let msg=`HISAB DETAILS
-Naam: ${data.name}
-Mobile: ${data.mobile}
-Tarikh: ${data.date}
-Time: ${data.time}
-Detail: ${data.detail}
-Paise: ${data.amount}
-
-📜 Puri hisab history yahan dekhein:
-${historyLink}`;
-
-    let url="https://api.whatsapp.com/send?phone=91"+mob+"&text="+encodeURIComponent(msg);
-    window.location.href=url;
+body{
+background:#dfe8de;
+font-family:Arial;
+padding:20px;
 }
 
-/* HISTORY */
-function loadHistory(num){
-    historyList.innerHTML="";
-    let all=JSON.parse(localStorage.getItem("hisab")||"[]");
-    let f=all.filter(e=>e.mobile===num);
-    if(f.length===0){historyList.innerHTML="<div class='entry'>No history</div>";return;}
-    f.forEach(e=>{
-        historyList.innerHTML+=`
-        <div class="entry">
-        ${e.date} ${e.time}<br>
-        ${e.detail}<br>
-        ₹${e.amount}
-        <button class="del" onclick="deleteOne(${e.id})">Delete</button>
-        </div>`;
-    });
-}
-function openMyHistory(){
-    formBox.classList.add("hidden");
-    historyBox.classList.remove("hidden");
-    loadHistory(currentMobile);
-}
-function deleteOne(id){
-    let all=JSON.parse(localStorage.getItem("hisab")||"[]");
-    all=all.filter(e=>e.id!==id);
-    localStorage.setItem("hisab",JSON.stringify(all));
-    loadHistory(currentMobile);
-}
-function deleteAll(){
-    if(!confirm("All history delete karni hai?"))return;
-    let all=JSON.parse(localStorage.getItem("hisab")||"[]");
-    all=all.filter(e=>e.mobile!==currentMobile);
-    localStorage.setItem("hisab",JSON.stringify(all));
-    loadHistory(currentMobile);
-}
-function backToForm(){
-    historyBox.classList.add("hidden");
-    formBox.classList.remove("hidden");
+.box{
+
+width:260px;
+
+margin:auto;
+
 }
 
-/* AUTO OPEN HISTORY FROM WHATSAPP LINK */
-window.onload=function(){
-    if(location.hash.startsWith("#history=")){
-        let num=location.hash.split("=")[1];
-        if(num){
-            loginBox.classList.add("hidden");
-            formBox.classList.add("hidden");
-            historyBox.classList.remove("hidden");
-            loadHistory(num);
-        }
-    }
-};
+input{
+
+width:100%;
+
+height:30px;
+
+padding:6px;
+
+font-size:11px;
+
+margin:4px 0;
+
+border-radius:6px;
+
+border:1px solid #999;
+
+}
+
+button{
+
+width:100%;
+
+height:32px;
+
+font-size:11px;
+
+background:#138b50;
+
+color:white;
+
+border:none;
+
+border-radius:6px;
+
+cursor:pointer;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+<input
+id="name"
+placeholder="Naam">
+
+<input
+id="number"
+placeholder="Mobile Number">
+
+<input
+id="hisab"
+placeholder="Hisab">
+
+<input
+id="money"
+placeholder="Paise">
+
+<button
+onclick="send()">
+
+WhatsApp
+
+</button>
+
+</div>
+
+<script>
+
+function send(){
+
+let n=
+document
+.getElementById("name")
+.value
+
+let num=
+document
+.getElementById("number")
+.value
+
+let h=
+document
+.getElementById("hisab")
+.value
+
+let m=
+document
+.getElementById("money")
+.value
+
+if(
+!n||
+!num
+){
+
+alert(
+"Naam aur Number likho"
+)
+
+return
+
+}
+
+let time=
+new Date()
+.toLocaleString()
+
+let msg=
+encodeURIComponent(
+
+`Naam:
+${n}
+
+Hisab:
+${h}
+
+Paise:
+₹${m}
+
+Time:
+${time}
+
+`
+
+)
+
+window.location=
+`https://wa.me/91${num}?text=${msg}`
+
+}
+
 </script>
 
 </body>
+
 </html>
