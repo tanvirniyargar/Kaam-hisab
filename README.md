@@ -62,18 +62,6 @@ button{
 
 <body>
 
-<!-- LOGIN -->
-<div class="card" id="loginBox">
-    <h2>Mobile Login</h2>
-    <input id="loginMobile" placeholder="Mobile Number">
-    <button onclick="sendOTP()">Send OTP</button>
-    <div class="note" id="otpNote"></div>
-    <div id="otpBox" class="hidden">
-        <input id="otpInput" placeholder="Enter OTP">
-        <button onclick="verifyOTP()">Verify OTP</button>
-    </div>
-</div>
-
 <!-- FORM -->
 <div class="card hidden" id="formBox">
     <h2>Hisab</h2>
