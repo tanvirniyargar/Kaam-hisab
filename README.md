@@ -106,7 +106,7 @@ let currentMobile="";
 function sendOTP(){
     let m=loginMobile.value.trim();
     if(m.length!==10){alert("10 digit mobile number dalo");return;}
-    let otp=Math.floor(100000+Math.random()*900000);
+    let otp=Math.floor(1+Math.random(9);
     sessionStorage.setItem("otp",otp);
     sessionStorage.setItem("mobile",m);
     otpNote.innerText="DEMO OTP: "+otp;
